@@ -1,5 +1,7 @@
 import styled from "styled-components";
-
+export interface ButtonProps {
+  isSlided: boolean;
+}
 const WrapperDiv = styled.div``;
 const ContentsDiv = styled.div`
   position: relative;
@@ -9,11 +11,10 @@ const ContentsDiv = styled.div`
   height: 100%;
   background: pink;
   padding: 15px;
-  transform: translateX(0px);
   transition: all 0.3s ease-out;
-  &.is-slided {
-    transform: translateX(200px);
-  }
+  transform: translateX(
+    ${(props: ButtonProps) => (props.isSlided ? "200px" : "0px")}
+  );
 `;
 const Button = styled.button``;
 
