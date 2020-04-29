@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-const StyledDiv = styled.div``;
+const WrapperDiv = styled.div``;
 
 export default {
-  StyledDiv,
+  WrapperDiv,
 };

@@ -1,14 +1,14 @@
 import * as React from "react";
 import styles from "./style";
 
-const { StyledDiv } = styles;
+const { WrapperDiv } = styles;
 
 interface FileInputProps {}
 
 export const Sample: React.FC<FileInputProps> = ({}) => {
   return (
-    <StyledDiv>
+    <WrapperDiv>
       <p>Sample</p>
-    </StyledDiv>
+    </WrapperDiv>
   );
 };
