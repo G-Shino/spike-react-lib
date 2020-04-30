@@ -6,6 +6,7 @@ import { CSSTransitionByStyledComponent1 } from "./CssTransitionExample/ByStyled
 import { CSSTransitionByStyledComponent2 } from "./CssTransitionExample/ByStyledComponent2";
 import { CssTransitionByReactTransitionGroup1 } from "./CssTransitionExample/ByReactTransitionGroup1";
 import { CssTransitionByReactTransitionGroup2 } from "./CssTransitionExample/ByReactTransitionGroup2";
+import { CssTransitionTry1 } from "./CssTransitionExample/Try1";
 
 export const Routes: React.FC<any> = (props) => {
   return (
@@ -43,6 +44,9 @@ export const Routes: React.FC<any> = (props) => {
             CssTransitionByReactTransitionGroup2
           </Link>
         </li>
+        <li>
+          <Link to="/css-transition-try-1">CssTransitionTry1</Link>
+        </li>
       </ul>
       <Switch>
         <Route exact path="/sample" component={Sample} />
@@ -65,6 +69,11 @@ export const Routes: React.FC<any> = (props) => {
           exact
           path="/css-transition-by-react-transition-group2"
           component={CssTransitionByReactTransitionGroup2}
+        />
+        <Route
+          exact
+          path="/css-transition-try-1"
+          component={CssTransitionTry1}
         />
       </Switch>
     </div>
