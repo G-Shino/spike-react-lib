@@ -12,6 +12,7 @@ import { CssTransitionByReactSpring2 } from "./CssTransitionExample/ByReactSprin
 import { CssTransitionByReactSpring3 } from "./CssTransitionExample/ByReactSpring3";
 import { CssTransitionByReactSpring4 } from "./CssTransitionExample/ByReactSpring4";
 import { CssTransitionByReactSpring5 } from "./CssTransitionExample/ByReactSpring5";
+import { ReactGestureSimpleExample } from "./ReactGesture/SimpleExanple";
 
 export const Routes: React.FC<any> = (props) => {
   return (
@@ -78,6 +79,14 @@ export const Routes: React.FC<any> = (props) => {
           <Link to="/css-transition-try-1">Try1</Link>
         </li>
       </ul>
+      <hr />
+      <h2>React Gesture</h2>
+      <ul>
+        <li>
+          <Link to="react-gesture-simple-example">SimpleExanple</Link>
+        </li>
+      </ul>
+      <hr />
       <Switch>
         <Route exact path="/sample" component={Sample} />
         <Route
@@ -129,6 +138,11 @@ export const Routes: React.FC<any> = (props) => {
           exact
           path="/css-transition-by-react-spring5"
           component={CssTransitionByReactSpring5}
+        />
+        <Route
+          exact
+          path="/react-gesture-simple-example"
+          component={ReactGestureSimpleExample}
         />
       </Switch>
     </div>
