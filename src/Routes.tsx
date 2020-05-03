@@ -6,14 +6,16 @@ import { CSSTransitionByStyledComponent1 } from "./CssTransitionExample/ByStyled
 import { CSSTransitionByStyledComponent2 } from "./CssTransitionExample/ByStyledComponent2";
 import { CssTransitionByReactTransitionGroup1 } from "./CssTransitionExample/ByReactTransitionGroup1";
 import { CssTransitionByReactTransitionGroup2 } from "./CssTransitionExample/ByReactTransitionGroup2";
-import { CssTransitionTry1 } from "./CssTransitionExample/Try1";
-import { CssTransitionByReactSpring1 } from "./CssTransitionExample/ByReactSpring1";
-import { CssTransitionByReactSpring2 } from "./CssTransitionExample/ByReactSpring2";
-import { CssTransitionByReactSpring3 } from "./CssTransitionExample/ByReactSpring3";
-import { CssTransitionByReactSpring4 } from "./CssTransitionExample/ByReactSpring4";
-import { CssTransitionByReactSpring5 } from "./CssTransitionExample/ByReactSpring5";
+import { ReactSpringSimpleExample } from "./ReactSpring/SimpleExample";
+import { CssTransitionByReactSpring2 } from "./ReactSpring/ByReactSpring2";
+import { CssTransitionByReactSpring3 } from "./ReactSpring/ByReactSpring3";
+import { CssTransitionByReactSpring4 } from "./ReactSpring/ByReactSpring4";
+import { CssTransitionByReactSpring5 } from "./ReactSpring/ByReactSpring5";
+import { ReactSpring6 } from "./ReactSpring/ByReactSpring6";
 import { ReactGestureSimpleExample } from "./ReactGesture/SimpleExanple";
 import { ReactGestureMoveList } from "./ReactGesture/MoveList";
+import { SpikeExhibitionTry1 } from "./Spike-Exhibition/Try1";
+import { SpikeExhibitionTry2 } from "./Spike-Exhibition/Try2";
 
 export const Routes: React.FC<any> = (props) => {
   return (
@@ -51,6 +53,10 @@ export const Routes: React.FC<any> = (props) => {
             ByReactTransitionGroup2
           </Link>
         </li>
+      </ul>
+      <hr />
+      <h2>React Spring</h2>
+      <ul>
         <li>
           <Link to="/css-transition-by-react-spring1">
             ByReactSpring1 useSpring
@@ -77,7 +83,9 @@ export const Routes: React.FC<any> = (props) => {
           </Link>
         </li>
         <li>
-          <Link to="/css-transition-try-1">Try1</Link>
+          <Link to="/css-transition-by-react-spring6">
+            ByReactSpring6 useTransition
+          </Link>
         </li>
       </ul>
       <hr />
@@ -88,6 +96,16 @@ export const Routes: React.FC<any> = (props) => {
         </li>
         <li>
           <Link to="react-gesture-move-list">MoveList</Link>
+        </li>
+      </ul>
+      <hr />
+      <h2>Spike Exhibition</h2>
+      <ul>
+        <li>
+          <Link to="/spike-exhibition-try1">Try1</Link>
+        </li>
+        <li>
+          <Link to="/spike-exhibition-try2">Try2</Link>
         </li>
       </ul>
       <hr />
@@ -115,13 +133,8 @@ export const Routes: React.FC<any> = (props) => {
         />
         <Route
           exact
-          path="/css-transition-try-1"
-          component={CssTransitionTry1}
-        />
-        <Route
-          exact
           path="/css-transition-by-react-spring1"
-          component={CssTransitionByReactSpring1}
+          component={ReactSpringSimpleExample}
         />
         <Route
           exact
@@ -145,6 +158,11 @@ export const Routes: React.FC<any> = (props) => {
         />
         <Route
           exact
+          path="/css-transition-by-react-spring6"
+          component={ReactSpring6}
+        />
+        <Route
+          exact
           path="/react-gesture-simple-example"
           component={ReactGestureSimpleExample}
         />
@@ -152,6 +170,16 @@ export const Routes: React.FC<any> = (props) => {
           exact
           path="/react-gesture-move-list"
           component={ReactGestureMoveList}
+        />
+        <Route
+          exact
+          path="/spike-exhibition-try1"
+          component={SpikeExhibitionTry1}
+        />
+        <Route
+          exact
+          path="/spike-exhibition-try2"
+          component={SpikeExhibitionTry2}
         />
       </Switch>
     </div>
