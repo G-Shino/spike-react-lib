@@ -5,6 +5,7 @@ import { useSprings } from "react-spring";
 const {
   WrapperDiv,
   StyledListDiv,
+  StyledButtonDiv,
   AnimatedBoxListsDiv,
   AnimatedBoxDiv,
   StyledButton,
@@ -24,20 +25,27 @@ const ELEM_NUM = 7;
 const ELEM_LIST_DUMMY = Array(7).fill(0);
 // 表示するインデックス先頭と最後
 const DISP_IDX_START = 1;
-const DISP_IDX_END = 4;
+const DISP_IDX_END = 5;
 
 //対象要素の高さ
 const BOX_HEIGHT = 100;
 const BOX_MARGIN = 20;
-const BOX_WIDTH = 400;
 
 export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
   const [mouseOverIndex, setMouseOverIndex] = React.useState(0);
   const [mouseClickIndex, setMouseClickIndex] = React.useState(0);
   const [flagClick, setFlagClick] = React.useState(false);
   const [flagMouseEnter, setFlagMouseEnter] = React.useState(false);
+  const [flagResize, setFlagResize] = React.useState(false);
   const [order, setOrder] = React.useState(
     ELEM_LIST_DUMMY.map((_, index) => index)
+  );
+
+  const refStyledListDiv = React.useRef<HTMLDivElement>(
+    document.createElement("div")
+  );
+  const refStyledButtonDiv = React.useRef<HTMLDivElement>(
+    document.createElement("div")
   );
 
   //スタイルを作る関数
@@ -53,16 +61,25 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
       : curIdx === DISP_IDX_END || curIdx === DISP_IDX_START
       ? 1
       : 2;
+
+    const styledListDiv = refStyledListDiv.current as HTMLDivElement;
+    const styledButtonDiv = refStyledButtonDiv.current as HTMLDivElement;
+    const moveX = styledButtonDiv.offsetWidth - 480;
     return {
-      x: mouseClickIndex === idx && flagClick ? 600 : 0,
+      x: mouseClickIndex === idx && flagClick ? moveX : 0,
       y: mouseClickIndex === idx && flagClick ? 0 : y,
       height:
-        mouseClickIndex === idx && flagClick
-          ? BOX_WIDTH
-          : BOX_HEIGHT - BOX_MARGIN,
+        mouseClickIndex === idx && flagClick ? 480 : BOX_HEIGHT - BOX_MARGIN,
+      width:
+        mouseClickIndex === idx && flagClick ? 480 : styledListDiv.offsetWidth,
       opacity,
-      zIndex,
+      zIndex: mouseClickIndex === idx && flagClick ? 3 : zIndex,
       scale: mouseOverIndex === idx && flagMouseEnter ? 1.2 : 1.0,
+      onRest: () => {
+        if (flagClick) {
+          console.log(mouseClickIndex);
+        }
+      },
       immediate: (n: string) => n === "zIndex",
     };
   };
@@ -74,6 +91,15 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
       return makeStyle(idx);
     })
   );
+
+  React.useEffect(() => {
+    setFlagResize(true);
+    const listner = () => {
+      setFlagResize((state) => !state);
+    };
+    window.addEventListener("resize", listner);
+    return () => window.removeEventListener("resize", listner);
+  }, [flagResize]);
 
   //配列の先頭を最後尾にする
   const handleUpperClick = () => {
@@ -125,7 +151,7 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
 
   return (
     <WrapperDiv>
-      <StyledListDiv>
+      <StyledListDiv ref={refStyledListDiv}>
         <StyledButton onClick={handleUpperClick}></StyledButton>
         <AnimatedBoxListsDiv
           style={{
@@ -148,7 +174,9 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
         </AnimatedBoxListsDiv>
         <StyledButton onClick={handleLowerClick}></StyledButton>
       </StyledListDiv>
-      <StyledButton onClick={handleBackButton}>戻る</StyledButton>{" "}
+      <StyledButtonDiv ref={refStyledButtonDiv}>
+        <StyledButton onClick={handleBackButton}>戻る</StyledButton>
+      </StyledButtonDiv>
     </WrapperDiv>
   );
 };

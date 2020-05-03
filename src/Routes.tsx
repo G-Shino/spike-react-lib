@@ -16,6 +16,7 @@ import { ReactGestureSimpleExample } from "./ReactGesture/SimpleExanple";
 import { ReactGestureMoveList } from "./ReactGesture/MoveList";
 import { SpikeExhibitionTry1 } from "./Spike-Exhibition/Try1";
 import { SpikeExhibitionTry2 } from "./Spike-Exhibition/Try2";
+import { SpikeExhibitionTry3 } from "./Spike-Exhibition/Try3";
 
 export const Routes: React.FC<any> = (props) => {
   return (
@@ -107,6 +108,9 @@ export const Routes: React.FC<any> = (props) => {
         <li>
           <Link to="/spike-exhibition-try2">Try2</Link>
         </li>
+        <li>
+          <Link to="/spike-exhibition-try3">Try3</Link>
+        </li>
       </ul>
       <hr />
       <Switch>
@@ -180,6 +184,11 @@ export const Routes: React.FC<any> = (props) => {
           exact
           path="/spike-exhibition-try2"
           component={SpikeExhibitionTry2}
+        />
+        <Route
+          exact
+          path="/spike-exhibition-try3"
+          component={SpikeExhibitionTry3}
         />
       </Switch>
     </div>

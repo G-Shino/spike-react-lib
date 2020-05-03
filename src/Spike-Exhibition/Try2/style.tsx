@@ -2,19 +2,33 @@ import styled from "styled-components";
 import { animated } from "react-spring";
 
 const WrapperDiv = styled.div`
-  width: 1000px;
-  height: 100%;
+  width: 80%;
+  height: 700px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr minmax(480px, 1.5fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "areaA areaB"
+    "areaC areaC";
 `;
 
 const StyledListDiv = styled.div`
-  width: 400px;
-  height: 100%;
+  width: 100%;
+  height: auto;
   margin-bottom: 20px;
+  grid-area: areaA;
+`;
+
+const StyledButtonDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  grid-area: areaC;
 `;
 
 const BaseBoxListsDiv = styled.div`
   position: relative;
-  width: 400px;
+  width: 100%;
   & > div:nth-child(1) {
     background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
   }
@@ -58,6 +72,7 @@ const StyledButton = styled.button`
 export default {
   WrapperDiv,
   StyledListDiv,
+  StyledButtonDiv,
   AnimatedBoxListsDiv,
   AnimatedBoxDiv,
   StyledButton,
