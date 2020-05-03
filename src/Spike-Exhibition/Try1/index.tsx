@@ -7,7 +7,7 @@ const { WrapperDiv, ImageDiv, Image, Button } = styles;
 
 interface FileInputProps {}
 
-export const CssTransitionTry1: React.FC<FileInputProps> = ({}) => {
+export const SpikeExhibitionTry1: React.FC<FileInputProps> = ({}) => {
   const [flagClick, setFlagClick] = useState(false);
   const [flagMouseOver, setFlagMouseOver] = useState(false);
   return (

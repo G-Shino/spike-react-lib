@@ -6,7 +6,7 @@ const { WrapperDiv, StyledDiv } = styles;
 
 interface FileInputProps {}
 
-export const CssTransitionByReactSpring1: React.FC<FileInputProps> = ({}) => {
+export const ReactSpringSimpleExample: React.FC<FileInputProps> = ({}) => {
   const [isActive, setIsActive] = React.useState(false);
   const props1 = useSpring({ opacity: 1, from: { opacity: 0 } });
   const props2 = useSpring({ opacity: isActive ? 1 : 0 });
