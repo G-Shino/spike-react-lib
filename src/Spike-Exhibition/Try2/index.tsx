@@ -1,10 +1,11 @@
 import * as React from "react";
 import styles from "./style";
-import { useSprings } from "react-spring";
+import { useSprings, useSpring } from "react-spring";
 
 const {
   WrapperDiv,
-  StyledListDiv,
+  AnimatedListDiv,
+  AnimatedCoverDiv,
   StyledButtonDiv,
   AnimatedBoxListsDiv,
   AnimatedBoxDiv,
@@ -40,6 +41,7 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
   const [order, setOrder] = React.useState(
     ELEM_LIST_DUMMY.map((_, index) => index)
   );
+  const [coverCont, setCoverCont] = React.useState("");
 
   const refStyledListDiv = React.useRef<HTMLDivElement>(
     document.createElement("div")
@@ -47,6 +49,12 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
   const refStyledButtonDiv = React.useRef<HTMLDivElement>(
     document.createElement("div")
   );
+  const spring = useSpring({
+    opacity: flagClick ? 1 : 0,
+    zIndex: flagClick ? 5 : -1,
+    delay: flagClick ? 600 : 0,
+    immediate: (n) => n === "zIndex",
+  });
 
   //スタイルを作る関数
   const makeStyle = (idx: number) => {
@@ -75,11 +83,6 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
       opacity,
       zIndex: mouseClickIndex === idx && flagClick ? 3 : zIndex,
       scale: mouseOverIndex === idx && flagMouseEnter ? 1.2 : 1.0,
-      onRest: () => {
-        if (flagClick) {
-          console.log(mouseClickIndex);
-        }
-      },
       immediate: (n: string) => n === "zIndex",
     };
   };
@@ -144,6 +147,7 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
       setMouseClickIndex(idx);
     }
     setFlagClick(true);
+    setCoverCont(String(idx * 1111111111111));
   };
   const handleBackButton = () => {
     setFlagClick(false);
@@ -151,8 +155,9 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
 
   return (
     <WrapperDiv>
-      <StyledListDiv ref={refStyledListDiv}>
-        <StyledButton onClick={handleUpperClick}></StyledButton>
+      <AnimatedCoverDiv style={spring}>{coverCont}</AnimatedCoverDiv>
+      <AnimatedListDiv ref={refStyledListDiv}>
+        <StyledButton onClick={handleUpperClick}>Up</StyledButton>
         <AnimatedBoxListsDiv
           style={{
             height: `${BOX_HEIGHT * (DISP_IDX_END - DISP_IDX_START + 1)}px`,
@@ -172,10 +177,10 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
             ></AnimatedBoxDiv>
           ))}
         </AnimatedBoxListsDiv>
-        <StyledButton onClick={handleLowerClick}></StyledButton>
-      </StyledListDiv>
+        <StyledButton onClick={handleLowerClick}>Down</StyledButton>
+      </AnimatedListDiv>
       <StyledButtonDiv ref={refStyledButtonDiv}>
-        <StyledButton onClick={handleBackButton}>戻る</StyledButton>
+        <StyledButton onClick={handleBackButton}>Back</StyledButton>
       </StyledButtonDiv>
     </WrapperDiv>
   );

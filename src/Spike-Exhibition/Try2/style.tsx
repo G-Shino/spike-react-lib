@@ -13,12 +13,24 @@ const WrapperDiv = styled.div`
     "areaC areaC";
 `;
 
-const StyledListDiv = styled.div`
+const BaseListDiv = styled.div`
   width: 100%;
   height: auto;
   margin-bottom: 20px;
   grid-area: areaA;
 `;
+const AnimatedListDiv = animated(BaseListDiv);
+
+const BaseCoverDiv = styled.div`
+  width: 100%;
+  height: 600px;
+  background: white;
+  margin-bottom: 20px;
+  border: solid 1px;
+  border-radius: 10px;
+  grid-area: areaA;
+`;
+const AnimatedCoverDiv = animated(BaseCoverDiv);
 
 const StyledButtonDiv = styled.div`
   width: 100%;
@@ -71,7 +83,8 @@ const StyledButton = styled.button`
 
 export default {
   WrapperDiv,
-  StyledListDiv,
+  AnimatedListDiv,
+  AnimatedCoverDiv,
   StyledButtonDiv,
   AnimatedBoxListsDiv,
   AnimatedBoxDiv,
