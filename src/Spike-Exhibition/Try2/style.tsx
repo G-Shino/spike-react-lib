@@ -2,10 +2,12 @@ import styled from "styled-components";
 import { animated } from "react-spring";
 
 const WrapperDiv = styled.div`
-  margin: 0 auto;
   width: 400px;
   height: 100%;
 `;
+const BasePageDiv = styled.div``;
+const AnimatedPageDiv = animated(BasePageDiv);
+
 const BaseBoxListsDiv = styled.div`
   position: relative;
   width: 100%;
@@ -51,6 +53,7 @@ const StyledButton = styled.button`
 
 export default {
   WrapperDiv,
+  AnimatedPageDiv,
   AnimatedBoxListsDiv,
   AnimatedBoxDiv,
   StyledButton,

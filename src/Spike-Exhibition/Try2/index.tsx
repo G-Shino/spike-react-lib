@@ -1,9 +1,10 @@
 import * as React from "react";
 import styles from "./style";
-import { useSprings } from "react-spring";
+import { useSprings, useTransition } from "react-spring";
 
 const {
   WrapperDiv,
+  AnimatedPageDiv,
   AnimatedBoxListsDiv,
   AnimatedBoxDiv,
   StyledButton,
@@ -20,33 +21,28 @@ const clamp = (x: number, min: number, max: number) => {
 
 // 実際の要素数
 const ELEM_NUM = 7;
+const ELEM_LIST_DUMMY = Array(7).fill(0);
 // 表示するインデックス先頭と最後
 const DISP_IDX_START = 1;
 const DISP_IDX_END = 4;
 
 //対象要素の高さ
 const BOX_HEIGHT = 100;
+const BOX_MARGIN = 20;
+const BOX_WIDTH = 400;
 
 export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
-  //springsの作成と初期スタイルの設定
-  const [springs, setSprings] = useSprings(ELEM_NUM, (idx) => {
-    const dispPos =
-      (clamp(idx, DISP_IDX_START, DISP_IDX_END) - DISP_IDX_START) * BOX_HEIGHT;
-    const flagDisp = idx < DISP_IDX_START || DISP_IDX_END < idx;
-    return {
-      x: 0,
-      y: dispPos,
-      opacity: flagDisp ? 0 : 1,
-      zIndex: flagDisp ? 0 : 1,
-      scale: 1,
-    };
-  });
-  //配列を格納するため
-  const order = React.useRef(springs.map((_, index) => index));
+  const [mouseOverIndex, setMouseOverIndex] = React.useState(0);
+  const [mouseClickIndex, setMouseClickIndex] = React.useState(0);
+  const [flagClick, setFlagClick] = React.useState(false);
+  const [flagMouseEnter, setFlagMouseEnter] = React.useState(false);
+  const [order, setOrder] = React.useState(
+    ELEM_LIST_DUMMY.map((_, index) => index)
+  );
 
-  //クリックした時用のsetSpringsに渡す、objを作る関数
+  //スタイルを作る関数
   const makeStyle = (idx: number) => {
-    const curIdx = order.current.indexOf(idx);
+    const curIdx = order.indexOf(idx);
     const y =
       (clamp(curIdx, DISP_IDX_START, DISP_IDX_END) - DISP_IDX_START) *
       BOX_HEIGHT;
@@ -57,72 +53,128 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
       : curIdx === DISP_IDX_END || curIdx === DISP_IDX_START
       ? 1
       : 2;
-    const props = {
-      x: 0,
-      y,
+    return {
+      x: mouseClickIndex === idx && flagClick ? 1000 : 0,
+      y: mouseClickIndex === idx && flagClick ? 0 : y,
+      height:
+        mouseClickIndex === idx && flagClick
+          ? BOX_WIDTH
+          : BOX_HEIGHT - BOX_MARGIN,
       opacity,
       zIndex,
+      scale: mouseOverIndex === idx && flagMouseEnter ? 1.2 : 1.0,
       immediate: (n: string) => n === "zIndex",
     };
-    return props;
   };
+
+  //springsの作成と初期スタイルの設定
+  const springs = useSprings(
+    ELEM_NUM,
+    ELEM_LIST_DUMMY.map((_, idx) => {
+      return makeStyle(idx);
+    })
+  );
 
   //配列の先頭を最後尾にする
   const handleUpperClick = () => {
-    const firstIdx = order.current.shift() as number;
-    order.current.push(firstIdx);
-    setSprings(makeStyle);
+    if (flagClick) {
+      return;
+    } else {
+      const curList = Array.from(order);
+      const firstIdx = curList.shift() as number;
+      curList.push(firstIdx);
+      setOrder(curList);
+    }
   };
 
   //配列の最後尾を先頭にする
   const handleLowerClick = () => {
-    const lastIdx = order.current.pop() as number;
-    order.current.unshift(lastIdx);
-    setSprings(makeStyle);
+    if (flagClick) {
+      return;
+    } else {
+      const curList = Array.from(order);
+      const lastIdx = curList.pop() as number;
+      curList.unshift(lastIdx);
+      setOrder(curList);
+    }
   };
 
   //カーソル がのったときは要素を拡大する
   const handleOnMouseEnter = (idx: number) => {
-    setSprings((i: number) => ({
-      scale: idx === i ? 1.2 : 1.0,
-    }));
+    if (flagClick) {
+      return;
+    } else {
+      setMouseOverIndex(idx);
+      setFlagMouseEnter(true);
+    }
   };
   const handleOnMouseLeave = () => {
-    setSprings((i: number) => ({
-      scale: 1.0,
-    }));
+    setFlagMouseEnter(false);
   };
 
-  //クリックしたときに移動and拡大
+  //クリック時のアクション
   const handleBoxClick = (idx: number) => {
-    setSprings((i: number) => ({
-      x: idx === i ? 500 : 0,
-    }));
+    if (!flagClick) {
+      setMouseClickIndex(idx);
+    }
+    setFlagClick(true);
+  };
+  const handleBackButton = () => {
+    setFlagClick(false);
   };
 
+  interface PagesProps {
+    [index: string]: any;
+  }
+  const pages = [
+    ({ style }: PagesProps) => (
+      <AnimatedPageDiv style={{ ...style }}>
+        <StyledButton onClick={handleUpperClick}></StyledButton>
+        <AnimatedBoxListsDiv
+          style={{
+            height: `${BOX_HEIGHT * (DISP_IDX_END - DISP_IDX_START + 1)}px`,
+          }}
+        >
+          {springs.map((spring, idx) => (
+            <AnimatedBoxDiv
+              key={idx}
+              style={{ ...spring }}
+              onClick={() => {
+                handleBoxClick(idx);
+              }}
+              onMouseEnter={() => {
+                handleOnMouseEnter(idx);
+              }}
+              onMouseLeave={handleOnMouseLeave}
+            ></AnimatedBoxDiv>
+          ))}
+        </AnimatedBoxListsDiv>
+        <StyledButton onClick={handleLowerClick}></StyledButton>
+        <StyledButton onClick={handleBackButton}>戻る</StyledButton>
+      </AnimatedPageDiv>
+    ),
+    ({ style }: PagesProps) => (
+      <AnimatedPageDiv style={{ ...style }}>aaaa</AnimatedPageDiv>
+    ),
+  ];
+
+  const [transitionIndex, setTransitioinIndex] = React.useState(0);
+  const transitions = useTransition(transitionIndex, (page) => page, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+  });
+
+  const handleTransitionClick = () => {
+    setTransitioinIndex((state) => (state + 1) % 2);
+  };
   return (
     <WrapperDiv>
-      <StyledButton onClick={handleUpperClick}></StyledButton>
-      <AnimatedBoxListsDiv
-        style={{
-          height: `${BOX_HEIGHT * (DISP_IDX_END - DISP_IDX_START + 1)}px`,
-        }}
-      >
-        {springs.map((spring, idx) => (
-          <AnimatedBoxDiv
-            key={idx}
-            style={{ ...spring }}
-            onMouseEnter={() => {
-              handleOnMouseEnter(idx);
-            }}
-            onMouseLeave={handleOnMouseLeave}
-            onClick={() => {
-              handleBoxClick(idx);
-            }}
-          ></AnimatedBoxDiv>
-        ))}
-      </AnimatedBoxListsDiv>
-      <StyledButton onClick={handleLowerClick}></StyledButton>
+      <StyledButton onClick={handleTransitionClick}></StyledButton>
+      {transitions.map(({ item, props, key }) => {
+        const Page = pages[item];
+        return <Page key={key} style={props}></Page>;
+      })}
     </WrapperDiv>
   );
 };
