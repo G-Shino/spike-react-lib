@@ -2,13 +2,19 @@ import styled from "styled-components";
 import { animated } from "react-spring";
 
 const WrapperDiv = styled.div`
-  margin: 0 auto;
-  width: 400px;
+  width: 1000px;
   height: 100%;
 `;
+
+const StyledListDiv = styled.div`
+  width: 400px;
+  height: 100%;
+  margin-bottom: 20px;
+`;
+
 const BaseBoxListsDiv = styled.div`
   position: relative;
-  width: 100%;
+  width: 400px;
   & > div:nth-child(1) {
     background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
   }
@@ -51,6 +57,7 @@ const StyledButton = styled.button`
 
 export default {
   WrapperDiv,
+  StyledListDiv,
   AnimatedBoxListsDiv,
   AnimatedBoxDiv,
   StyledButton,
