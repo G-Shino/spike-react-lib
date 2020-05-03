@@ -1,10 +1,10 @@
 import * as React from "react";
 import styles from "./style";
-import { useSprings, useTransition } from "react-spring";
+import { useSprings } from "react-spring";
 
 const {
   WrapperDiv,
-  AnimatedPageDiv,
+  StyledListDiv,
   AnimatedBoxListsDiv,
   AnimatedBoxDiv,
   StyledButton,
@@ -54,7 +54,7 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
       ? 1
       : 2;
     return {
-      x: mouseClickIndex === idx && flagClick ? 1000 : 0,
+      x: mouseClickIndex === idx && flagClick ? 600 : 0,
       y: mouseClickIndex === idx && flagClick ? 0 : y,
       height:
         mouseClickIndex === idx && flagClick
@@ -123,12 +123,9 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
     setFlagClick(false);
   };
 
-  interface PagesProps {
-    [index: string]: any;
-  }
-  const pages = [
-    ({ style }: PagesProps) => (
-      <AnimatedPageDiv style={{ ...style }}>
+  return (
+    <WrapperDiv>
+      <StyledListDiv>
         <StyledButton onClick={handleUpperClick}></StyledButton>
         <AnimatedBoxListsDiv
           style={{
@@ -150,31 +147,8 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
           ))}
         </AnimatedBoxListsDiv>
         <StyledButton onClick={handleLowerClick}></StyledButton>
-        <StyledButton onClick={handleBackButton}>戻る</StyledButton>
-      </AnimatedPageDiv>
-    ),
-    ({ style }: PagesProps) => (
-      <AnimatedPageDiv style={{ ...style }}>aaaa</AnimatedPageDiv>
-    ),
-  ];
-
-  const [transitionIndex, setTransitioinIndex] = React.useState(0);
-  const transitions = useTransition(transitionIndex, (page) => page, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-  });
-
-  const handleTransitionClick = () => {
-    setTransitioinIndex((state) => (state + 1) % 2);
-  };
-  return (
-    <WrapperDiv>
-      <StyledButton onClick={handleTransitionClick}></StyledButton>
-      {transitions.map(({ item, props, key }) => {
-        const Page = pages[item];
-        return <Page key={key} style={props}></Page>;
-      })}
+      </StyledListDiv>
+      <StyledButton onClick={handleBackButton}>戻る</StyledButton>{" "}
     </WrapperDiv>
   );
 };
