@@ -1,6 +1,16 @@
 import * as React from "react";
 import styles from "./style";
 import { useSprings, useSpring } from "react-spring";
+import Yam from "./../../../data/works/Yam.jpg";
+import Uena from "./../../../data/works/Uena.jpg";
+import Takuro from "./../../../data/works/Takuro.jpg";
+import Shinogu from "./../../../data/works/Shinogu.jpg";
+import Oto from "./../../../data/works/Oto.jpg";
+import Oga from "./../../../data/works/Oga.jpg";
+import Kana from "./../../../data/works/Kana.jpg";
+import Heejun from "./../../../data/works/Heejun.jpg";
+import Hazuki from "./../../../data/works/Hazuki.jpg";
+import Fumin from "./../../../data/works/Fu-min.jpg";
 
 const {
   WrapperDiv,
@@ -10,6 +20,7 @@ const {
   AnimatedBoxListsDiv,
   AnimatedBoxDiv,
   StyledButton,
+  StyledImg,
 } = styles;
 
 interface FileInputProps {}
@@ -22,8 +33,8 @@ const clamp = (x: number, min: number, max: number) => {
 };
 
 // 実際の要素数
-const ELEM_NUM = 7;
-const ELEM_LIST_DUMMY = Array(7).fill(0);
+const ELEM_NUM = 10;
+const ELEM_LIST_DUMMY = Array(ELEM_NUM).fill(0);
 // 表示するインデックス先頭と最後
 const DISP_IDX_START = 1;
 const DISP_IDX_END = 5;
@@ -32,7 +43,20 @@ const DISP_IDX_END = 5;
 const BOX_HEIGHT = 100;
 const BOX_MARGIN = 20;
 
-export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
+const LIST_IMG_OBJ = [
+  { img: Yam, cont: "先生の言葉" },
+  { img: Uena, cont: "Uena" },
+  { img: Takuro, cont: "Takuro" },
+  { img: Shinogu, cont: "Shinogu" },
+  { img: Oto, cont: "Oto" },
+  { img: Oga, cont: "Oga" },
+  { img: Kana, cont: "Kana" },
+  { img: Heejun, cont: "Heejun" },
+  { img: Hazuki, cont: "Hazuki" },
+  { img: Fumin, cont: "Fumin" },
+];
+
+export const SpikeExhibitionTry4: React.FC<FileInputProps> = ({}) => {
   const [mouseOverIndex, setMouseOverIndex] = React.useState(0);
   const [mouseClickIndex, setMouseClickIndex] = React.useState(0);
   const [flagClick, setFlagClick] = React.useState(false);
@@ -52,7 +76,7 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
   const spring = useSpring({
     opacity: flagClick ? 1 : 0,
     zIndex: flagClick ? 5 : -1,
-    delay: flagClick ? 600 : 0,
+    delay: flagClick ? 1000 : 0,
     immediate: (n) => n === "zIndex",
   });
 
@@ -147,7 +171,7 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
       setMouseClickIndex(idx);
     }
     setFlagClick(true);
-    setCoverCont(String(idx * 1111111111111));
+    setCoverCont(LIST_IMG_OBJ[idx].cont);
   };
   const handleBackButton = () => {
     setFlagClick(false);
@@ -174,7 +198,9 @@ export const SpikeExhibitionTry2: React.FC<FileInputProps> = ({}) => {
                 handleOnMouseEnter(idx);
               }}
               onMouseLeave={handleOnMouseLeave}
-            ></AnimatedBoxDiv>
+            >
+              <StyledImg src={LIST_IMG_OBJ[idx].img} />
+            </AnimatedBoxDiv>
           ))}
         </AnimatedBoxListsDiv>
         <StyledButton onClick={handleLowerClick}>Down</StyledButton>

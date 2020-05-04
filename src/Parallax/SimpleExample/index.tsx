@@ -1,30 +1,32 @@
 import * as React from "react";
-import styles from "./style";
 import { Parallax, ParallaxLayer } from "react-spring/addons";
-
-const { WrapperDiv } = styles;
 
 interface FileInputProps {}
 
 export const ParallaxSimpleExample: React.FC<FileInputProps> = ({}) => {
   return (
-    <WrapperDiv>
-      <p>Sample</p>
-      <Parallax pages={3}>
-        <ParallaxLayer
-          offset={0}
-          speed={1}
-          style={{ backgroundColor: "red" }}
-        ></ParallaxLayer>
+    <Parallax pages={2}>
+      <ParallaxLayer offset={0.3} speed={0} style={{ backgroundColor: "red" }}>
+        <span>Scroll down !</span>
+      </ParallaxLayer>
 
-        <ParallaxLayer
-          offset={1}
-          speed={3}
-          style={{
-            backgroundColor: "blue",
-          }}
-        ></ParallaxLayer>
-      </Parallax>
-    </WrapperDiv>
+      <ParallaxLayer
+        offset={1.2}
+        speed={0}
+        style={{
+          backgroundColor: "blue",
+        }}
+      >
+        <span>Scroll down!</span>
+      </ParallaxLayer>
+
+      <ParallaxLayer offset={0.9} speed={3}>
+        <span>I'm fast</span>
+      </ParallaxLayer>
+
+      <ParallaxLayer offset={-0.2} speed={1.3}>
+        <span>I'm going in the other direction!</span>
+      </ParallaxLayer>
+    </Parallax>
   );
 };

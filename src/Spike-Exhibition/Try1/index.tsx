@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import styles from "./style";
-import Yam from "./../../../data/Yam.jpg";
+import Yam from "./../../../data/works/Yam.jpg";
 
 const { WrapperDiv, ImageDiv, Image, Button } = styles;
 
