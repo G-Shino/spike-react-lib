@@ -72,7 +72,9 @@ const BaseBoxDiv = styled.div`
   height: 80px;
   margin-top: 10px;
   margin-bottom: 10px;
+  border: solid 1px;
   border-radius: 10px;
+  overflow: hidden;
 `;
 const AnimatedBoxDiv = animated(BaseBoxDiv);
 
@@ -80,6 +82,12 @@ const StyledButton = styled.button`
   width: 100%;
   height: 50px;
   border-radius: 10px;
+`;
+
+const StyledImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 export default {
@@ -90,4 +98,5 @@ export default {
   AnimatedBoxListsDiv,
   AnimatedBoxDiv,
   StyledButton,
+  StyledImg,
 };
