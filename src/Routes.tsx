@@ -19,8 +19,9 @@ import { SpikeExhibitionTry2 } from "./Spike-Exhibition/Try2";
 import { SpikeExhibitionTry3 } from "./Spike-Exhibition/Try3";
 import { SpikeExhibitionTry4 } from "./Spike-Exhibition/Try4";
 import { ParallaxSimpleExample } from "./Parallax/SimpleExample";
+import { CustomHook } from "./CustomHook";
 
-export const Routes: React.FC<any> = (props) => {
+export const Routes: React.FC<any> = () => {
   return (
     <div>
       <h1>Spike React Lib</h1>
@@ -124,6 +125,12 @@ export const Routes: React.FC<any> = (props) => {
           <Link to="/parallax-simple-example">Parallax Example</Link>
         </li>
       </ul>
+      <h2>CustomHook</h2>
+      <ul>
+        <li>
+          <Link to="/custom-hook">Custom Hook Example</Link>
+        </li>
+      </ul>
       <Switch>
         <Route exact path="/sample" component={Sample} />
         <Route
@@ -211,6 +218,7 @@ export const Routes: React.FC<any> = (props) => {
           path="/parallax-simple-example"
           component={ParallaxSimpleExample}
         />
+        <Route exact path="/custom-hook" component={CustomHook} />
       </Switch>
     </div>
   );
